@@ -1,0 +1,53 @@
+from functools import reduce
+
+try:
+    def det_4x4(matrix):
+        if len(matrix) != 4 or len(matrix[0]) != 4:
+            raise ValueError("A matriz indentificada não é 4x4")
+
+        det = 0
+
+        for j in range(4):
+            submatriz = [[matrix[i][k] for k in range(4) if k != j] for i in range(1, 4)]
+            subdet = det_3x3(submatriz)
+            det += (-1) ** j * matrix[0][j] * subdet
+
+        return det
+
+
+    def det_3x3(matrix):
+        a = matrix[0][0]
+        b = matrix[0][1]
+        c = matrix[0][2]
+        d = matrix[1][0]
+        e = matrix[1][1]
+        f = matrix[1][2]
+        g = matrix[2][0]
+        h = matrix[2][1]
+        i = matrix[2][2]
+
+        return (a * e *  i + b * f * g + c * d * h) - (c * e * g + b * d * i + a * f * h)
+
+
+    m = ([[1, 2, 3, 4],
+        [2, 4, 6, 8],
+        [3, 6, 9, 12],
+        [4, 8, 12, 16]])
+
+    perm = reduce(operator.mul, (1, 2, 3, 4))
+    determinante = det_4x4(m)
+
+    print(f"O valor da determinante da primeira matriz é: {determinante}")
+
+    m = ([[1,  2,  3, 4],
+         [0,  2,  3,  4],
+         [0,  0,  3,  4],
+         [0,  0,  0,  4]])
+
+    determinante = det_4x4(m)
+
+    print(f"\nO valor da determinante da segunda matriz é: {determinante}")
+    print(f"O número de permutações possíveis em ambas matrizes é de: {perm}")
+
+except:
+    pass
